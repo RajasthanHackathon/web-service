@@ -16,8 +16,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="title">
-            <h1>Welcome to BDS</h1>
+        <div class="title" style="padding-top: 75px;">
+            <h1>Welcome to BDF</h1>
         </div>
         <div class="left" >
             <div class="card" id="blood" style="background-color: #F44336;" onclick="window.location='{% url 'portal_request_blood' %}'">
@@ -38,12 +38,12 @@
     $('#donor').hover(function () {
         $('body')[0].style.backgroundColor = '#9FA8DA';
     }, function () {
-         $('body')[0].style.backgroundColor = '#e5e5e5';
+         $('body')[0].style.backgroundColor = '#252525';
     });
     $('#blood').hover(function () {
         $('body')[0].style.backgroundColor = '#ef9a9a';
     }, function () {
-         $('body')[0].style.backgroundColor = '#e5e5e5';
+         $('body')[0].style.backgroundColor = '#252525';
     })
 </script>
 </html>
