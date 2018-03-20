@@ -2,7 +2,7 @@ function sendreq(mob,pincode,blood_grp) {
     $.post("/api/request", {
         "phone":mob,
         "pin_code":pincode,
-        "blood_group":num_to_grp(blood_grp),
+        "blood_group":num_to_grp(parseInt(blood_grp)),
         "high_volume":'False'
     }).done(function() {
         console.log( "req sent" );
