@@ -15,7 +15,6 @@ import config
 from bloodfinder.blood_rank import blood_rank, map_client
 from bloodfinder.models import Request, PhoneNumber, Donor, SMSBuffer, BloodGroups, Donations
 
-
 opt_key = "TMJHD4GPFOJQNKD3"
 
 DONOR_HOTLINE = '9898'
@@ -66,8 +65,21 @@ class PortalRequestBlood(View):
         request_.phone = phone
         request_.blood_group = request.POST['blood_group']
         request_.high_volume = 'high_volume' in request.POST
-        request_.district = request.POST['pin_code']
+        request_.pin_code = request.POST['pin_code']
         request_.save()
+        donor_list = blood_rank(request_)
+        for donor in donor_list:
+            d = Donations()
+            d.donor = donor
+            d.request = request_
+            d.save()
+            sms = SMSBuffer()
+            sms.sender = DONOR_HOTLINE
+            sms.to = donor.phone
+            sms.message = "Hi " + donor.name + ", there is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
+            sms.save()
+            print(sms.to)
+            print(sms.message)
         return redirect('portal_success')
 
 
@@ -79,7 +91,7 @@ class PortalRegistrationPhoneVerify(View):
 
     def post(self, request):
         request.session['context'] = {'phone': request.POST['phone'], 'name': request.POST['name'],
-                                      'district': request.POST['pin_code'],
+                                      'pin_code': request.POST['pin_code'],
                                       'blood_group': request.POST['blood_group']}
         sms = SMSBuffer()
         sms.sender = "BDF-VERIFY"
@@ -159,8 +171,9 @@ def api_search(request):
         sms = SMSBuffer()
         sms.sender = DONOR_HOTLINE
         sms.to = donor.phone
-        sms.message = "There is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
+        sms.message = "Hi " + donor.name + ", there is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
         sms.save()
+        print(sms.to)
         print(sms.message)
 
     return JsonResponse({'status': 'ok'})
@@ -172,6 +185,11 @@ def api_donor_confirm(request):
     donation = Donations.objects.get(has_accepted=None, donor__phone=number)
     donation.has_accepted = True
     donation.save()
+    sms = SMSBuffer()
+    sms.sender = USER_HOTLINE
+    sms.to = donation.request.phone.phone
+    sms.message = "A donor has offered to donate blood. Please dial 808486666 and use pin 4567 to contact the donor"
+    sms.save()
     return JsonResponse({'status': 'ok'})
 
 
@@ -213,6 +231,7 @@ Simulation
 i) Dialer
 ii) SMS
 '''
+
 
 def dial(request):
     return render(request , 'bloodfinder/dialer.html')
