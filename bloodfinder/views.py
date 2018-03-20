@@ -138,7 +138,7 @@ APIs
 @csrf_exempt
 def api_search(request):
     request_ = Request()
-    data = json.loads(request.body)
+    data = request.POST
     print(data)
     if PhoneNumber.objects.filter(phone=data['phone']).exists():
         phone = PhoneNumber.objects.get(phone=data['phone'])
@@ -148,7 +148,7 @@ def api_search(request):
     request_.phone = phone
     request_.blood_group = data['blood_group']
     request_.high_volume = data['high_volume']
-    request_.district = data['pin_code']
+    request_.pin_code = data['pin_code']
     request_.save()
     donor_list = blood_rank(request_)
     for donor in donor_list:
@@ -211,7 +211,11 @@ def get_sms(request):
 '''
 Simulation
 i) Dialer
+ii) SMS
 '''
 
 def dial(request):
-    return render(request , 'bloodfinder/dialer.html');
+    return render(request , 'bloodfinder/dialer.html')
+
+def SMS(request):
+    return render(request , 'bloodfinder/sms.html')

@@ -1,10 +1,9 @@
 function sendreq(mob,pincode,blood_grp) {
-    console.log("TEST");
-    
     $.post("/api/request", {
         "phone":mob,
-        "pincode":pincode,
-        "group":blood_grp
+        "pin_code":pincode,
+        "blood_group":blood_grp,
+        "high_volume":'False'
     }).done(function() {
         console.log( "req sent" );
       })

@@ -185,12 +185,12 @@ $(document).ready(function () {
 		for(i=6;i<9 && text[i]!=' ';i++)
 		  grp += text[i];
 		i++;
-		pincode = text.substring(i,i+5);
+		pincode = text.substring(i,i+6);
 		console.log(mob,pincode,grp);
 		status = sendreq(mob,pincode,grp);
 	}
 	else
-		messenger.recieve("Incorrect format");
+		messenger.recieve("Incorrect format - Correct format 'blood \<blood_group\> \<pin_code\> '");
     $input.val('');
     $input.focus();
   }
@@ -209,17 +209,6 @@ $(document).ready(function () {
   messenger.onSend = buildSent;
   messenger.onRecieve = buildRecieved;
 
-  setTimeout(function () {
-    messenger.recieve('Hello there!');
-  }, 1500);
-
-  setTimeout(function () {
-    messenger.recieve('Do you like this? If so check out more on my page...');
-  }, 5000);
-
-  setTimeout(function () {
-    messenger.recieve('Or maybe just give it a like!');
-  }, 7500);
 
   setInterval(function() {
       checkSMS();

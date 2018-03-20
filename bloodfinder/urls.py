@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('api/getsms', views.get_sms, name="get_sms"),
 
-    path('simulate/dial' , views.dial , name="simulate_dial")
+    path('simulate/dial' , views.dial , name="simulate_dial"),
+    path('simulate/sms' , views.SMS , name="simulate_sms")
 
 ]
