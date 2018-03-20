@@ -2,7 +2,7 @@ function sendreq(mob,pincode,blood_grp) {
     $.post("/api/request", {
         "phone":mob,
         "pin_code":pincode,
-        "blood_group":blood_grp,
+        "blood_group":num_to_grp(blood_grp),
         "high_volume":'False'
     }).done(function() {
         console.log( "req sent" );
@@ -16,7 +16,7 @@ function register(mob,fam_id,blood_grp) {
     $.post("/api/register", {
         "phone":mob,
         "family_id":fam_id,
-        "group":blood_grp
+        "group":num_to_grp(blood_grp)
     }).done(function(response) {
         console.log(response);        
     }).fail(function(response) {
