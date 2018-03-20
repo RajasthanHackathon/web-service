@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Limelight');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
 body{
     margin: 0;
     padding: 0;
-    background-color: #e5e5e5;
+    background-color: #252525;
     transition: 0.35s ease-in-out;
+    font-family: 'Ubuntu', sans-serif;
 }
 .container{
     width: 98vw;
@@ -12,7 +14,7 @@ body{
 }
 .left , .right{
     width: 49vw;
-    height: 80vh;
+    height: 65vh;
     display: flex;
     justify-content: center;
     align-items: center;

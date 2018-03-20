@@ -1,5 +1,6 @@
 import json
 
+import googlemaps as googlemaps
 import pyotp
 import requests
 from django.conf import settings
@@ -10,8 +11,11 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
+import config
 from bloodfinder.blood_rank import blood_rank
 from bloodfinder.models import Request, PhoneNumber, Donor, SMSBuffer, BloodGroups, Donations
+
+map_client = googlemaps.Client(key=config.key)
 
 opt_key = "TMJHD4GPFOJQNKD3"
 
@@ -98,7 +102,7 @@ class PortalDonorRegistration(View):
             donor = Donor()
             donor.phone = context['phone']
             donor.name = context['name']
-            donor.district = context['district']
+            donor.pin_code = context['pin_code']
             donor.blood_group = context['blood_group']
             donor.save()
             del request.session['context']
@@ -142,7 +146,7 @@ def api_search(request):
     request_.phone = phone
     request_.blood_group = data['blood_group']
     request_.high_volume = data['high_volume']
-    request_.district = data['district']
+    request_.district = data['pin_code']
     request_.save()
     donor_list = blood_rank(request_)
     for donor in donor_list:

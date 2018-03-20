@@ -43,6 +43,8 @@ def get_weighted_donors(request: Request):
     if max_donations is None:
         max_donations = 0
     for d in Donor.objects.exclude(donations__request=request):
+        if d in request.rejected_list:
+            continue
         w = WeightedDonor()
         w.donor = d
         w.weight = get_blood_weight(blood_group, d.blood_group)
