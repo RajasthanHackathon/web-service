@@ -65,8 +65,21 @@ class PortalRequestBlood(View):
         request_.phone = phone
         request_.blood_group = request.POST['blood_group']
         request_.high_volume = 'high_volume' in request.POST
-        request_.district = request.POST['pin_code']
+        request_.pin_code = request.POST['pin_code']
         request_.save()
+        donor_list = blood_rank(request_)
+        for donor in donor_list:
+            d = Donations()
+            d.donor = donor
+            d.request = request_
+            d.save()
+            sms = SMSBuffer()
+            sms.sender = DONOR_HOTLINE
+            sms.to = donor.phone
+            sms.message = "Hi " + donor.name + ", there is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
+            sms.save()
+            print(sms.to)
+            print(sms.message)
         return redirect('portal_success')
 
 
@@ -158,8 +171,9 @@ def api_search(request):
         sms = SMSBuffer()
         sms.sender = DONOR_HOTLINE
         sms.to = donor.phone
-        sms.message = "There is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
+        sms.message = "Hi " + donor.name + ", there is a request for your blood urgently. Please confirm by replying to this SMS with a YES."
         sms.save()
+        print(sms.to)
         print(sms.message)
 
     return JsonResponse({'status': 'ok'})

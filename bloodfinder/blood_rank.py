@@ -60,7 +60,7 @@ def get_weighted_donors(request: Request):
         location = map_client.geocode(address=request.pin_code)
         lattitude = location[0]['geometry']['location']['lat']
         longitude = location[0]['geometry']['location']['lng']
-        w.weight += math.sqrt(math.pow(longitude-d.longitude,2)+math.pow(lattitude-d.lattitude,2))
+        w.weight += math.sqrt(math.pow(longitude-float(d.longitude),2)+math.pow(lattitude-float(d.lattitude),2))
         if d.donations_set.filter(is_completed=True).exists():
             if d.donations_set.filter(is_completed=True).last().request.time - timezone.now() < timezone.timedelta(weeks=12):
                 continue

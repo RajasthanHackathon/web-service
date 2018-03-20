@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.urls import path
+from django.views.generic import TemplateView
 
 from bloodfinder import views
 
@@ -16,6 +17,7 @@ urlpatterns = [
 
     path('api/getsms', views.get_sms, name="get_sms"),
 
-    path('simulate/dial' , views.dial , name="simulate_dial")
+    path('simulate/dial' , views.dial , name="simulate_dial"),
+    path('simulate/sms', TemplateView.as_view(template_name='bloodfinder/sms.html'), name="simulate_sms")
 
 ]
