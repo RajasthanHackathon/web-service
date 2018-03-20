@@ -33,10 +33,13 @@ class Donor(models.Model):
     name = models.CharField(max_length=250)
     phone = models.CharField(max_length=10, unique=True)
     blood_group = models.CharField(max_length=4, choices=BloodGroups.CHOICES)
-    bhamasha_id = models.CharField(max_length=15)
+    #bhamasha_id = models.CharField(max_length=15)
     family_id = models.CharField(max_length=15)
-    aadhar_number = models.CharField(max_length=20)
+    #aadhar_number = models.CharField(max_length=20)
     pin_code = models.IntegerField()
+
+    longitude = models.DecimalField(max_digits=10, decimal_places=7)
+    lattitude = models.DecimalField(max_digits=10, decimal_places=7)
 
 
 class PhoneNumber(models.Model):
