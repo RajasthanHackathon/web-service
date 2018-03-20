@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.urls import path
 
 from bloodfinder import views
@@ -13,5 +14,8 @@ urlpatterns = [
     path('api/user/complete', views.api_user_complete, name="user_complete"),
     path('api/donor/confirm', views.api_donor_confirm, name="donor_confirm"),
 
-    path('api/getsms', views.get_sms, name="get_sms")
+    path('api/getsms', views.get_sms, name="get_sms"),
+
+    path('simulate/dial' , views.dial , name="simulate_dial")
+
 ]

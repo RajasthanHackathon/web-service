@@ -201,3 +201,11 @@ def get_sms(request):
 #     donor.name = request.POST['name']
 #     donor.family_id = family_dno
 #     donor.
+
+'''
+Simulation
+i) Dialer
+'''
+
+def dial(request):
+    return render(request , 'bloodfinder/dialer.html');
