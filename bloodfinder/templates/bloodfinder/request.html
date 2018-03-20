@@ -37,13 +37,7 @@
                         </div>
                     </div>
                     <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                        <label>District</label>
-                        <select class="select-simple form-control pmd-select2" name="district">
-                            <option></option>
-                            {% for choice in districts %}
-                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                            {% endfor %}
-                        </select>
+                        <input type="text" placeholder="Enter Pin Code" name="pin_code">
                     </div>
                     <div class="form-group pmd-textfield pmd-textfield-floating-label">
                         <label>Blood Group</label>

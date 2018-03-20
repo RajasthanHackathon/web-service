@@ -55,11 +55,9 @@ def get_weighted_donors(request: Request):
             continue
         if Donations.objects.filter(donor=d, request=request).exists():
             continue
-        cordinates = map_client.geocode()
-        if district == d.district:
-            w.weight += 1
-        else:
-            continue
+        location = map_client.geocode(address=request.pin_code)
+        lattitude = location[0]['geometry']['location']['lat']
+        longitude = location[0]['geometry']['location']['lng']
         if d.donations_set.filter(is_completed=True).exists():
             if d.donations_set.filter(is_completed=True).last().request.time - timezone.now() < timezone.timedelta(weeks=12):
                 continue
