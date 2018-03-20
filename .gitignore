@@ -183,3 +183,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 /config.py
+/db.sqlite3
