@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Blood Donor Finder">
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+
+    <title>Blood Donor Finder</title>
+    <meta name="description" content="Find the blood donor easily"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'portel.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Welcome to BDS</h1>
+        </div>
+        <div class="left" >
+            <div class="card" id="blood" style="background-color: #F44336;" onclick="window.location='{% url 'portal_request_blood' %}'">
+                <span>I need </span>
+                <p>Blood</p>
+            </div>
+        </div>
+        <div class="right" >
+            <div class="card" id="donor" style="background-color: #5C6BC0;" onclick="window.location='{% url 'portal_registration_phone_verify' %}'">
+                <span>Become a</span>
+                <p>Donor</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'jquery-1.12.2.min.js' %}"></script>
+<script>
+    $('#donor').hover(function () {
+        $('body')[0].style.backgroundColor = '#9FA8DA';
+    }, function () {
+         $('body')[0].style.backgroundColor = '#e5e5e5';
+    });
+    $('#blood').hover(function () {
+        $('body')[0].style.backgroundColor = '#ef9a9a';
+    }, function () {
+         $('body')[0].style.backgroundColor = '#e5e5e5';
+    })
+</script>
+</html>

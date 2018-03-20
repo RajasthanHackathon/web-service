@@ -33,10 +33,10 @@ class Donor(models.Model):
     name = models.CharField(max_length=250)
     phone = models.CharField(max_length=10, unique=True)
     blood_group = models.CharField(max_length=4, choices=BloodGroups.CHOICES)
-    district = models.CharField(max_length=2)
     bhamasha_id = models.CharField(max_length=15)
     family_id = models.CharField(max_length=15)
     aadhar_number = models.CharField(max_length=20)
+    pin_code = models.IntegerField()
 
 
 class PhoneNumber(models.Model):
@@ -50,7 +50,7 @@ class Request(models.Model):
     phone = models.ForeignKey(PhoneNumber, on_delete=models.SET_NULL, null=True)
     blood_group = models.CharField(max_length=4, choices=BloodGroups.CHOICES)
     high_volume = models.BooleanField(default=False)
-    district = models.CharField(max_length=2)
+    pin_code =models.IntegerField()
 
     time = models.DateTimeField(default=timezone.now)
     is_completed = models.BooleanField(default=False)

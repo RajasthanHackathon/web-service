@@ -25,7 +25,7 @@ SECRET_KEY = 'vmscnk(b=k&^ngs5zw1kkrv89&s7dqiav9g1#7aj!069a#on0='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
