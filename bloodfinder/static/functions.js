@@ -34,7 +34,7 @@ function update_status(mob,new_status) {
     });
 }
 function num_to_grp(num) {
-    switch(blood_grp) {
+    switch(num) {
         case 1:
             grp = "A+";break;
         case 2:
