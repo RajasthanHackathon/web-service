@@ -15,7 +15,6 @@ import config
 from bloodfinder.blood_rank import blood_rank, map_client
 from bloodfinder.models import Request, PhoneNumber, Donor, SMSBuffer, BloodGroups, Donations
 
-
 opt_key = "TMJHD4GPFOJQNKD3"
 
 DONOR_HOTLINE = '9898'
@@ -79,7 +78,7 @@ class PortalRegistrationPhoneVerify(View):
 
     def post(self, request):
         request.session['context'] = {'phone': request.POST['phone'], 'name': request.POST['name'],
-                                      'district': request.POST['pin_code'],
+                                      'pin_code': request.POST['pin_code'],
                                       'blood_group': request.POST['blood_group']}
         sms = SMSBuffer()
         sms.sender = "BDF-VERIFY"
@@ -172,6 +171,11 @@ def api_donor_confirm(request):
     donation = Donations.objects.get(has_accepted=None, donor__phone=number)
     donation.has_accepted = True
     donation.save()
+    sms = SMSBuffer()
+    sms.sender = USER_HOTLINE
+    sms.to = donation.request.phone.phone
+    sms.message = "A donor has offered to donate blood. Please dial 808486666 and use pin 4567 to contact the donor"
+    sms.save()
     return JsonResponse({'status': 'ok'})
 
 
@@ -213,5 +217,6 @@ Simulation
 i) Dialer
 '''
 
+
 def dial(request):
-    return render(request , 'bloodfinder/dialer.html');
+    return render(request, 'bloodfinder/dialer.html')

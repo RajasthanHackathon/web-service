@@ -1,9 +1,13 @@
 import googlemaps
+import math
 from django.db.models import Max, Count
 from django.utils import timezone
 
 import config
 from bloodfinder.models import Donor, Request, BloodGroups, Donations
+BLOOD_MATCH_COEFF = 1
+DISTANCE_COEFFICIENT = 1
+DONNATIONS_COEFF = 1
 
 matrix_i = [BloodGroups.On, BloodGroups.Op, BloodGroups.Bn, BloodGroups.Bp, BloodGroups.An,
             BloodGroups.Ap, BloodGroups.ABn, BloodGroups.ABp]
@@ -46,8 +50,6 @@ def get_weighted_donors(request: Request):
     if max_donations is None:
         max_donations = 0
     for d in Donor.objects.exclude(donations__request=request):
-        if d in request.rejected_list:
-            continue
         w = WeightedDonor()
         w.donor = d
         w.weight = get_blood_weight(blood_group, d.blood_group)
@@ -58,6 +60,7 @@ def get_weighted_donors(request: Request):
         location = map_client.geocode(address=request.pin_code)
         lattitude = location[0]['geometry']['location']['lat']
         longitude = location[0]['geometry']['location']['lng']
+        w.weight += math.sqrt(math.pow(longitude-d.longitude,2)+math.pow(lattitude-d.lattitude,2))
         if d.donations_set.filter(is_completed=True).exists():
             if d.donations_set.filter(is_completed=True).last().request.time - timezone.now() < timezone.timedelta(weeks=12):
                 continue
