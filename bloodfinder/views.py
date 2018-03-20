@@ -150,7 +150,7 @@ APIs
 @csrf_exempt
 def api_search(request):
     request_ = Request()
-    data = request.POST
+    data = request.POST #json.loads(request.body)
     print(data)
     if PhoneNumber.objects.filter(phone=data['phone']).exists():
         phone = PhoneNumber.objects.get(phone=data['phone'])
@@ -229,12 +229,8 @@ def get_sms(request):
 '''
 Simulation
 i) Dialer
-ii) SMS
 '''
 
 
 def dial(request):
-    return render(request , 'bloodfinder/dialer.html')
-
-def SMS(request):
-    return render(request , 'bloodfinder/sms.html')
+    return render(request, 'bloodfinder/dialer.html')
