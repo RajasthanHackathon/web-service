@@ -12,10 +12,9 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 import config
-from bloodfinder.blood_rank import blood_rank
+from bloodfinder.blood_rank import blood_rank, map_client
 from bloodfinder.models import Request, PhoneNumber, Donor, SMSBuffer, BloodGroups, Donations
 
-map_client = googlemaps.Client(key=config.key)
 
 opt_key = "TMJHD4GPFOJQNKD3"
 
@@ -104,6 +103,9 @@ class PortalDonorRegistration(View):
             donor.name = context['name']
             donor.pin_code = context['pin_code']
             donor.blood_group = context['blood_group']
+            location = map_client.geocode(address=context['pin_code'])
+            donor.lattitude = location[0]['geometry']['location']['lat']
+            donor.longitude = location[0]['geometry']['location']['lng']
             donor.save()
             del request.session['context']
         else:

@@ -1,6 +1,8 @@
+import googlemaps
 from django.db.models import Max, Count
 from django.utils import timezone
 
+import config
 from bloodfinder.models import Donor, Request, BloodGroups, Donations
 
 matrix_i = [BloodGroups.On, BloodGroups.Op, BloodGroups.Bn, BloodGroups.Bp, BloodGroups.An,
@@ -17,6 +19,7 @@ blood_match_matrix = [
     [1, 0, 0, 0, 0, 0, 0, 0],
 ]
 
+map_client = googlemaps.Client(key=config.key)
 
 class WeightedDonor:
     def __init__(self):
@@ -52,6 +55,7 @@ def get_weighted_donors(request: Request):
             continue
         if Donations.objects.filter(donor=d, request=request).exists():
             continue
+        cordinates = map_client.geocode()
         if district == d.district:
             w.weight += 1
         else:
